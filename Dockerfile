@@ -1,6 +1,11 @@
 # Define a base stage that uses the official python runtime base image
 FROM python:3.12.10-slim-bullseye AS base
 
+ENV FLASK_APP=prom.py
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV PYTHONUNBUFFERED=1
+
 # Add curl for healthcheck
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl
@@ -12,21 +17,11 @@ WORKDIR /usr/local/app
 COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Define a stage specifically for development, where it'll watch for
-# filesystem changes
-FROM base AS dev
-RUN pip install watchdog
-ENV FLASK_ENV=development
-CMD ["python", "app.py"]
-
-# Define the final stage that will bundle the application for production
-FROM base AS final
-
 # Copy our code from the current folder to the working directory inside the container
 COPY . .
 
 # Make port 80 available for links and/or publish
-EXPOSE 80
+EXPOSE 8080
 
 # Define our command to be run when launching the container
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:80", "--log-file", "-", "--access-logfile", "-", "--workers", "4", "--keep-alive", "0"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "-w", "2", "prom:app"]

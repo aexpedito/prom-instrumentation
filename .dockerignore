@@ -1,0 +1,8 @@
+Dockerfile
+.gitignore
+notes.txt
+.venv
+.dockerignore
+logs/app.log
+logs/flask.log
+app/__pycache__
