@@ -14,6 +14,9 @@ def create_app(conf_class=object):
     from app.metrics import bp_metrics
     app.register_blueprint(bp_metrics)
 
+    from app.health import bp_health
+    app.register_blueprint(bp_health)
+
     #configure logging
     dict_config = {
         'version': 1,
