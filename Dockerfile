@@ -9,9 +9,9 @@ ENV PATH="/root/.local/bin:$PATH"
 ENV POETRY_VERSION=2.1.2
 
 # Add curl for healthcheck
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
-    apt-get clean
+RUN apt update && \
+    apt install -y --no-install-recommends curl && \
+    apt clean
 
 # Set the application directory
 WORKDIR /usr/local/app
@@ -25,7 +25,7 @@ RUN python -m pip install poetry==$POETRY_VERSION && \
 # Copy our code from the current folder to the working directory inside the container
 COPY . .
 
-# Make port 8080 available for links and/or publish
+# Make port 8080 available
 EXPOSE 8080
 
 # Define our command to be run when launching the container

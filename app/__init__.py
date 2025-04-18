@@ -3,13 +3,18 @@ from logging.config import fileConfig
 import logging
 
 def create_app(conf_class=object):
-
+    #Start flask application
     app = Flask(__name__)
     app.config.from_object(conf_class)
 
+    #Register all blueprints with routes
     from app.main import bp as bp_main
     app.register_blueprint(bp_main)
 
+    from app.metrics import bp_metrics
+    app.register_blueprint(bp_metrics)
+
+    #configure logging
     dict_config = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -24,7 +29,7 @@ def create_app(conf_class=object):
                 'level': 'INFO',
                 'formatter': 'standard',
                 'filename': 'logs/flask.log',
-                'maxBytes': 10485760,
+                'maxBytes': 1024,
                 'backupCount': 5,
                 'encoding': 'utf8'
             },
@@ -39,7 +44,7 @@ def create_app(conf_class=object):
                 'level': 'INFO',
                 'formatter': 'standard',
                 'filename': 'logs/app.log',
-                'maxBytes': 10485760,
+                'maxBytes': 1024,
                 'backupCount': 5,
                 'encoding': 'utf8'
             }
