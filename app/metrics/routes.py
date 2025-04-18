@@ -8,7 +8,7 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 logging = logging.getLogger("applicationLogger")
 
-@bp_metrics.route('/metrics')
+@bp_metrics.route('/metrics', methods=['GET'])
 def metrics():
     logging.info('### Metrics route')
     return Response(generate_latest(),mimetype=CONTENT_TYPE_LATEST)

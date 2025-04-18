@@ -11,9 +11,9 @@ logging = logging.getLogger("applicationLogger")
 #Cria metrica do prometheus
 REQUEST_COUNT = Counter('http_requests_index_total', 'Count all HTTP requests', ['method', 'endpoint'])
 
-@bp.route('/')
-@bp.route('/index')
-@bp.route('/index.html')
+@bp.route('/', methods=['GET'])
+@bp.route('/index', methods=['GET'])
+@bp.route('/index.html', methods=['GET'])
 def index():
     logging.info('### Render template: index.html')
     REQUEST_COUNT.labels(method='GET', endpoint='/').inc()
