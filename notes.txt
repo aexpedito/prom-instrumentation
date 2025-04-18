@@ -1,0 +1,3 @@
+#poetry steps
+$ poetry init
+$ xargs poetry add < requirements.txt
