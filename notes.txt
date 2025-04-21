@@ -1,3 +1,5 @@
 #poetry steps
 $ poetry init
+
+#carrega todas as dependencias do pip no poetry
 $ xargs poetry add < requirements.txt

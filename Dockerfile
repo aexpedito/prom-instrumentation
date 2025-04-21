@@ -10,7 +10,7 @@ ENV POETRY_VERSION=2.1.2
 
 # Add curl for healthcheck
 RUN apt update && \
-    apt install -y --no-install-recommends curl && \
+    apt install -y --no-install-recommends curl psmisc && \
     apt clean
 
 # Set the application directory
